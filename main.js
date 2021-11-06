@@ -36,7 +36,7 @@ let srcIndex = 0;
 let CrismastreeCtx = gameLayout.getContext("2d")
 let c_tree = {
     x_position: 1280,
-    y_position: 478,
+    y_position: 477,
     width: 80,
     height: 80
 }
@@ -136,6 +136,15 @@ let loop = setInterval(() => {
         } else {
             srcIndex++
         }
+    }
+
+    //defeat check (collision between player and tree)
+    if((cowBoy.x_position >= c_tree.x_position ) && (cowBoy.y_position >= c_tree.y_position)){
+        alert("You lost")
+        console.log(cowBoy.x_position,c_tree.x_position)
+        console.log(cowBoy.y_position,c_tree.y_position)
+        //stop game loop
+        clearInterval(loop)
     }
 
 }, miliSecond);
