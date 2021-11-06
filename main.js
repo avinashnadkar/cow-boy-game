@@ -1,3 +1,5 @@
+////////////////Init game data ///////////////////////
+
 let gameLayout = document.getElementById("gameLayout");
 
 //define height and width and color of layout
@@ -25,12 +27,13 @@ let cowBoy = {
     height: 80
 }
 
-let cowBoyArr = ["Run__000.png","Run__001.png","Run__007.png","Run__002.png","Run__003.png","Run__004.png","Run__005.png","Run__006.png","Run__007.png","Run__008.png","Run__009.png"];
+let cowBoyRunning = ["Run__000.png", "Run__001.png", "Run__002.png", "Run__003.png", "Run__004.png", "Run__005.png", "Run__006.png", "Run__007.png", "Run__008.png", "Run__009.png"];
+let cowBoyJumping = ["Jump__000.png", "Jump__001.png", "Jump__002.png", "Jump__003.png", "Jump__004.png", "Jump__005.png", "Jump__006.png", "Jump__007.png", "Jump__008.png", "Jump__009.png"]
 let cowBoyImg = new Image;
 let srcIndex = 0;
 
 // Crismas tree
-let  CrismastreeCtx = gameLayout.getContext("2d")
+let CrismastreeCtx = gameLayout.getContext("2d")
 let c_tree = {
     x_position: 1280,
     y_position: 478,
@@ -38,7 +41,7 @@ let c_tree = {
     height: 80
 }
 
-let  CrismastreeImg = new Image;
+let CrismastreeImg = new Image;
 CrismastreeImg.src = "Assets/Trees/cristmas.png";
 
 //moon
@@ -53,43 +56,86 @@ let moonVal = {
 let moonImg = new Image;
 moonImg.src = "Assets/moon.png"
 
+//Cloud
+let cloudCtx = gameLayout.getContext('2d');
+let cloudVal = {
+    x_position: 300,
+    y_position: 5,
+    width: 500,
+    height: 120
+}
 
+let cloudOneImg = new Image;
+cloudOneImg.src = "Assets/sky_objects/cloud_1.png"
+
+///////////////////player movements//////////////////////
+
+//jump player
+let isJumping = false;
+addEventListener('keydown',function (e){
+    if((e.key == "ArrowUp" || e.key == " " || e.key == "w") && (cowBoy.y_position >= 476)){
+        isJumping  = true
+    }
+}) 
+
+////////////////////////Game loop/////////////////////////
+
+let miliSecond = 35
 
 let loop = setInterval(() => {
 
     cowBoyCtx.clearRect(0, 0, w, h)
 
+    //draw moon
     moonCtx.drawImage(moonImg, moonVal.x_position, moonVal.y_position, moonVal.width, moonVal.height);
-    surfaceCtx.fillRect(surface.x_position,surface.y_position,surface.width,surface.height)
+    
+    //draw cloud
+    if (cloudVal.x_position <= -500) {
+        cloudVal.x_position = 1360
+    } else {
+        cloudVal.x_position -= 0.7
+    }
+    cloudCtx.drawImage(cloudOneImg, cloudVal.x_position, cloudVal.y_position, cloudVal.width, cloudVal.height)
+
+    //draw surface
+    surfaceCtx.fillRect(surface.x_position, surface.y_position, surface.width, surface.height)
     surfaceCtx.fillStyle = "green"
 
     //Tree
-    CrismastreeCtx.drawImage(CrismastreeImg, c_tree.x_position,c_tree.y_position,c_tree.width,c_tree.height)
-
-    //Loop cowboy
-    cowBoyImg.src =  `Assets/Monkey/Running/${cowBoyArr[srcIndex]}`
-    cowBoyCtx.drawImage(cowBoyImg,cowBoy.x_position,cowBoy.y_position,cowBoy.width,cowBoy.height);
-    if(srcIndex == 8){
-        srcIndex = 0
-    }else{
-        srcIndex++
+    if (c_tree.x_position <= 0) {
+        c_tree.x_position = 1280
+    } else {
+        c_tree.x_position -= 30
     }
 
-}, 35);
+    CrismastreeCtx.drawImage(CrismastreeImg, c_tree.x_position, c_tree.y_position, c_tree.width, c_tree.height)
 
+    //Loop cowboy
+    if(isJumping == true){
+        //jump cowboy
+        if(cowBoy.y_position >= 320){
+            cowBoy.y_position-=15
+        }else{
+            isJumping = false
+        }
+        cowBoyImg.src = `Assets/Monkey/Jumping/${cowBoyJumping[srcIndex]}`
+        cowBoyCtx.drawImage(cowBoyImg, cowBoy.x_position, cowBoy.y_position, cowBoy.width, cowBoy.height);
+        if (srcIndex == 8) {
+            srcIndex = 0
+        } else {
+            srcIndex++
+        }
+    }else{
+        if(cowBoy.y_position < 477){
+            cowBoy.y_position+=15
+        }
+        cowBoyImg.src = `Assets/Monkey/Running/${cowBoyRunning[srcIndex]}`
+        cowBoyCtx.drawImage(cowBoyImg, cowBoy.x_position, cowBoy.y_position, cowBoy.width, cowBoy.height);
+        if (srcIndex == 8) {
+            srcIndex = 0
+        } else {
+            srcIndex++
+        }
+    }
 
-
-
-
-    // moonCtx.clearRect(0, 0, w, h)
-    // if(moonVal.y_position == 100) {
-    //     flag = true;
-    // }
-    // if(flag){
-    //     moonCtx.drawImage(moonImg, moonVal.x_position, moonVal.y_position++, moonVal.width, moonVal.height);
-    // }else{
-    //     moonCtx.drawImage(moonImg, moonVal.x_position, moonVal.y_position--, moonVal.width, moonVal.height);
-    // }
-    // if(moonVal.y_position == h-100){
-    //     flag = false
-    // }
+}, miliSecond);
