@@ -2,6 +2,14 @@
 
 let gameLayout = document.getElementById("gameLayout");
 
+//score
+let currentScore = 0;
+let highScore = localStorage.getItem('highScore') || 0;
+
+let currentScoreCtx = gameLayout.getContext("2d");
+let highScoreCtx = gameLayout.getContext("2d");
+highScoreCtx.font = "80px Arial";
+
 //define height and width and color of layout
 let w = 1350;
 let h = 657;
@@ -68,6 +76,7 @@ let cloudVal = {
 let cloudOneImg = new Image;
 cloudOneImg.src = "Assets/sky_objects/cloud_1.png"
 
+
 ///////////////////player movements//////////////////////
 
 //jump player
@@ -85,6 +94,12 @@ let miliSecond = 35
 let loop = setInterval(() => {
 
     cowBoyCtx.clearRect(0, 0, w, h)
+
+    //score
+    currentScore++
+    currentScoreCtx.font = "26px Arial";
+    currentScoreCtx.fillText(`score : ${currentScore}`, 20, 50);
+    highScoreCtx.fillText(`High Score : ${highScore}`, 20, 80);
 
     //draw moon
     moonCtx.drawImage(moonImg, moonVal.x_position, moonVal.y_position, moonVal.width, moonVal.height);
@@ -141,10 +156,11 @@ let loop = setInterval(() => {
     //defeat check (collision between player and tree)
     if((cowBoy.x_position >= c_tree.x_position ) && (cowBoy.y_position >= c_tree.y_position)){
         alert("You lost")
-        console.log(cowBoy.x_position,c_tree.x_position)
-        console.log(cowBoy.y_position,c_tree.y_position)
         //stop game loop
         clearInterval(loop)
+        if(currentScore > highScore){
+            localStorage.setItem('highScore', currentScore)
+        }
     }
 
 }, miliSecond);
