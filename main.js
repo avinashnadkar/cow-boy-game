@@ -210,7 +210,7 @@ let loop = setInterval(() => {
         }
     }
 
-    //Increase speed of obstacles to increse level of deficulties
+    //Increase speed of obstacles to increse level of difficulties
     if(currentScore % 500 == 0){
         angryBird.speed += 2
         c_tree.speed += 2
