@@ -3,12 +3,42 @@
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Night Monkey</title>
+    <title>Cow Boy Game</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
 </head>
 <body>
     <canvas id="gameLayout"></canvas>
+    <div class="modal">
+          <div class="desktop-guide">
+             <h2 class="countDown"></h2>
+             <div class="rules-guide">
+                <h2>Rules</h2>
+                <h4>Welcome to this game</h4>
+                <p>1) You have to avoid abstacles to score highest</p>
+                <p>2) Game will become difficult after running every 500+ score</p>
+                <button id="rules-next-btn">Next</button>
+             </div>
+            <div class="control-guide">
+                <h2>Controls</h2>
+                <p>1) To jump the player you can press up-arrow-key, space or "w" key</p>
+                <div>
+                    <button id="ctrl-back-btn">Back</button>
+                    <button id="ctrl-next-btn">Next</button>
+                </div> 
+            </div>
+            <div class="score-guide">
+                <h2>Score</h2>
+                <p>1) Score will increse on every milisecond</p>
+                <p>2) High Score will be saved on browser</p>
+                <div>
+                    <button id="score-back-btn">Back</button>
+                    <button id="score-start-btn">Start game</button>
+                </div> 
+            </div>
+          </div>
+    </div>
+
     <script src='main.js'></script>
 </body>
 </html>
