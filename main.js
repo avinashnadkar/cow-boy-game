@@ -161,7 +161,7 @@ addEventListener('keydown', function (e) {
 
 function start(){
 //loop speed
-let miliSecond = 1000/60
+let miliSecond = 1000/10
 
 let loop = setInterval(() => {
 
