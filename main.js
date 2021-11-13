@@ -1,58 +1,58 @@
-// ///////////////////Play Guide /////////////////////////
-// let countDown = document.querySelector('.countDown');
-// let modal = document.querySelector('.modal')
+///////////////////Play Guide /////////////////////////
+let countDown = document.querySelector('.countDown');
+let modal = document.querySelector('.modal')
 
-// let ruleBox = document.querySelector('.rules-guide');
-// let ruleNextBtn = document.getElementById('rules-next-btn');
+let ruleBox = document.querySelector('.rules-guide');
+let ruleNextBtn = document.getElementById('rules-next-btn');
 
-// let controlBox = document.querySelector('.control-guide')
-// let ctrlNextBtn = document.getElementById('ctrl-next-btn');
-// let ctrlBackBtn = document.getElementById('ctrl-back-btn');
+let controlBox = document.querySelector('.control-guide')
+let ctrlNextBtn = document.getElementById('ctrl-next-btn');
+let ctrlBackBtn = document.getElementById('ctrl-back-btn');
 
-// let scoreBox = document.querySelector('.score-guide')
-// let scoreStartBtn = document.getElementById('score-start-btn');
-// let scoreBackBtn = document.getElementById('score-back-btn');
+let scoreBox = document.querySelector('.score-guide')
+let scoreStartBtn = document.getElementById('score-start-btn');
+let scoreBackBtn = document.getElementById('score-back-btn');
 
-// controlBox.style.display = 'none'
-// scoreBox.style.display = 'none'
+controlBox.style.display = 'none'
+scoreBox.style.display = 'none'
 
-// ruleNextBtn.addEventListener('click',()=>{
-//     controlBox.style.display = 'block';
-//     ruleBox.style.display = 'none';
-// })
+ruleNextBtn.addEventListener('click',()=>{
+    controlBox.style.display = 'block';
+    ruleBox.style.display = 'none';
+})
 
-// ctrlNextBtn.addEventListener('click',()=>{
-//     controlBox.style.display = 'none';
-//     scoreBox.style.display = 'block';
-// })
+ctrlNextBtn.addEventListener('click',()=>{
+    controlBox.style.display = 'none';
+    scoreBox.style.display = 'block';
+})
 
 
-// ctrlBackBtn.addEventListener('click',()=>{
-//     controlBox.style.display = 'none';
-//     ruleBox.style.display = 'block';
-// })
+ctrlBackBtn.addEventListener('click',()=>{
+    controlBox.style.display = 'none';
+    ruleBox.style.display = 'block';
+})
 
-// scoreBackBtn.addEventListener('click',()=>{
-//     controlBox.style.display = 'block';
-//     scoreBox.style.display = 'none';
-// })
+scoreBackBtn.addEventListener('click',()=>{
+    controlBox.style.display = 'block';
+    scoreBox.style.display = 'none';
+})
 
-// scoreStartBtn.addEventListener('click',()=>{
-//     scoreBox.style.display = 'none';
-//     let counter = 3
-//     let countdown = setInterval(()=>{
-//         countDown.innerHTML = counter
-//         counter--
-//         console.log(counter)
-//         if(counter == -1) {
-//             clearInterval(countdown)
-//             modal.style.display = 'none'
-//             //start game after coundown is 0
-//             start()
-//         }
-//     },1000)
-//     //desktopGuid.style.display = 'block';
-// })
+scoreStartBtn.addEventListener('click',()=>{
+    scoreBox.style.display = 'none';
+    let counter = 3
+    let countdown = setInterval(()=>{
+        countDown.innerHTML = counter
+        counter--
+        console.log(counter)
+        if(counter == -1) {
+            clearInterval(countdown)
+            modal.style.display = 'none'
+            //start game after coundown is 0
+            start()
+        }
+    },1000)
+    //desktopGuid.style.display = 'block';
+})
 
 ////////////////Init game data ///////////////////////
 
@@ -103,7 +103,7 @@ let c_tree = {
     y_position: 477,
     width: 80,
     height: 80,
-    speed : 30
+    speed : 15
 }
 
 let CrismastreeImg = new Image;
@@ -116,7 +116,7 @@ let angryBird = {
     y_position: 360,
     width: 50,
     height: 50,
-    speed : 30
+    speed : 15
 }
 let birdsImgArr = ['bird-1.png', 'bird-2.png', 'bird-3.png', 'bird-4.png'];
 let angryBirdImg = new Image
@@ -161,7 +161,7 @@ addEventListener('keydown', function (e) {
 
 function start(){
 //loop speed
-let miliSecond = 1000/30
+let miliSecond = 1000/60
 
 let loop = setInterval(() => {
 
@@ -226,7 +226,7 @@ let loop = setInterval(() => {
     if (isJumping == true) {
         //jump cowboy
         if (cowBoy.y_position >= 320) {
-            cowBoy.y_position -= 20
+            cowBoy.y_position -= 10
         } else {
             isJumping = false
         }
@@ -240,7 +240,7 @@ let loop = setInterval(() => {
         }
     } else {
         if (cowBoy.y_position < 477) {
-            cowBoy.y_position += 20
+            cowBoy.y_position += 10
         }
         cowBoyImg.src = `Assets/Monkey/Running/${cowBoyRunning[srcIndex]}`
         cowBoyCtx.drawImage(cowBoyImg, cowBoy.x_position, cowBoy.y_position, cowBoy.width, cowBoy.height);
@@ -279,5 +279,3 @@ let loop = setInterval(() => {
 }, miliSecond);
 
 }
-
-start()
