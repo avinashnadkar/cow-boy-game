@@ -1,58 +1,58 @@
-///////////////////Play Guide /////////////////////////
-let countDown = document.querySelector('.countDown');
-let modal = document.querySelector('.modal')
+// ///////////////////Play Guide /////////////////////////
+// let countDown = document.querySelector('.countDown');
+// let modal = document.querySelector('.modal')
 
-let ruleBox = document.querySelector('.rules-guide');
-let ruleNextBtn = document.getElementById('rules-next-btn');
+// let ruleBox = document.querySelector('.rules-guide');
+// let ruleNextBtn = document.getElementById('rules-next-btn');
 
-let controlBox = document.querySelector('.control-guide')
-let ctrlNextBtn = document.getElementById('ctrl-next-btn');
-let ctrlBackBtn = document.getElementById('ctrl-back-btn');
+// let controlBox = document.querySelector('.control-guide')
+// let ctrlNextBtn = document.getElementById('ctrl-next-btn');
+// let ctrlBackBtn = document.getElementById('ctrl-back-btn');
 
-let scoreBox = document.querySelector('.score-guide')
-let scoreStartBtn = document.getElementById('score-start-btn');
-let scoreBackBtn = document.getElementById('score-back-btn');
+// let scoreBox = document.querySelector('.score-guide')
+// let scoreStartBtn = document.getElementById('score-start-btn');
+// let scoreBackBtn = document.getElementById('score-back-btn');
 
-controlBox.style.display = 'none'
-scoreBox.style.display = 'none'
+// controlBox.style.display = 'none'
+// scoreBox.style.display = 'none'
 
-ruleNextBtn.addEventListener('click',()=>{
-    controlBox.style.display = 'block';
-    ruleBox.style.display = 'none';
-})
+// ruleNextBtn.addEventListener('click',()=>{
+//     controlBox.style.display = 'block';
+//     ruleBox.style.display = 'none';
+// })
 
-ctrlNextBtn.addEventListener('click',()=>{
-    controlBox.style.display = 'none';
-    scoreBox.style.display = 'block';
-})
+// ctrlNextBtn.addEventListener('click',()=>{
+//     controlBox.style.display = 'none';
+//     scoreBox.style.display = 'block';
+// })
 
 
-ctrlBackBtn.addEventListener('click',()=>{
-    controlBox.style.display = 'none';
-    ruleBox.style.display = 'block';
-})
+// ctrlBackBtn.addEventListener('click',()=>{
+//     controlBox.style.display = 'none';
+//     ruleBox.style.display = 'block';
+// })
 
-scoreBackBtn.addEventListener('click',()=>{
-    controlBox.style.display = 'block';
-    scoreBox.style.display = 'none';
-})
+// scoreBackBtn.addEventListener('click',()=>{
+//     controlBox.style.display = 'block';
+//     scoreBox.style.display = 'none';
+// })
 
-scoreStartBtn.addEventListener('click',()=>{
-    scoreBox.style.display = 'none';
-    let counter = 3
-    let countdown = setInterval(()=>{
-        countDown.innerHTML = counter
-        counter--
-        console.log(counter)
-        if(counter == -1) {
-            clearInterval(countdown)
-            modal.style.display = 'none'
-            //start game after coundown is 0
-            start()
-        }
-    },1000)
-    //desktopGuid.style.display = 'block';
-})
+// scoreStartBtn.addEventListener('click',()=>{
+//     scoreBox.style.display = 'none';
+//     let counter = 3
+//     let countdown = setInterval(()=>{
+//         countDown.innerHTML = counter
+//         counter--
+//         console.log(counter)
+//         if(counter == -1) {
+//             clearInterval(countdown)
+//             modal.style.display = 'none'
+//             //start game after coundown is 0
+//             start()
+//         }
+//     },1000)
+//     //desktopGuid.style.display = 'block';
+// })
 
 ////////////////Init game data ///////////////////////
 
@@ -88,7 +88,7 @@ let cowBoy = {
     x_position: 120,
     y_position: 657 - 180,
     width: 80,
-    height: 80
+    height: 80,
 }
 
 let cowBoyRunning = ["Run__000.png", "Run__001.png", "Run__002.png", "Run__003.png", "Run__004.png", "Run__005.png", "Run__006.png", "Run__007.png", "Run__008.png", "Run__009.png"];
@@ -160,8 +160,8 @@ addEventListener('keydown', function (e) {
 ////////////////////////Game loop/////////////////////////
 
 function start(){
-      //loop speed
-let miliSecond = 35
+//loop speed
+let miliSecond = 1000/30
 
 let loop = setInterval(() => {
 
@@ -226,26 +226,28 @@ let loop = setInterval(() => {
     if (isJumping == true) {
         //jump cowboy
         if (cowBoy.y_position >= 320) {
-            cowBoy.y_position -= 15
+            cowBoy.y_position -= 20
         } else {
             isJumping = false
         }
         cowBoyImg.src = `Assets/Monkey/Jumping/${cowBoyJumping[srcIndex]}`
         cowBoyCtx.drawImage(cowBoyImg, cowBoy.x_position, cowBoy.y_position, cowBoy.width, cowBoy.height);
+        //increase src index number to change image src
         if (srcIndex == 8) {
             srcIndex = 0
-        } else {
+        } else{
             srcIndex++
         }
     } else {
         if (cowBoy.y_position < 477) {
-            cowBoy.y_position += 15
+            cowBoy.y_position += 20
         }
         cowBoyImg.src = `Assets/Monkey/Running/${cowBoyRunning[srcIndex]}`
         cowBoyCtx.drawImage(cowBoyImg, cowBoy.x_position, cowBoy.y_position, cowBoy.width, cowBoy.height);
+         //increase src index number to change image src
         if (srcIndex == 8) {
             srcIndex = 0
-        } else {
+        } else{
             srcIndex++
         }
     }
@@ -277,3 +279,5 @@ let loop = setInterval(() => {
 }, miliSecond);
 
 }
+
+start()
