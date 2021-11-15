@@ -88,6 +88,7 @@ let cowBoy = {
     y_position: 477,
     width: 80,
     height: 80,
+    speed : 7
 }
 
 let cowBoyRunning = ["Run__000.png", "Run__001.png", "Run__002.png", "Run__003.png", "Run__004.png", "Run__005.png", "Run__006.png", "Run__007.png", "Run__008.png", "Run__009.png"];
@@ -102,7 +103,7 @@ let c_tree = {
     y_position: 477,
     width: 80,
     height: 80,
-    speed : 15
+    speed : 23
 }
 
 let CrismastreeImg = new Image;
@@ -115,7 +116,7 @@ let angryBird = {
     y_position: 360,
     width: 50,
     height: 50,
-    speed : 15
+    speed : 25
 }
 let birdsImgArr = ['bird-1.png', 'bird-2.png', 'bird-3.png', 'bird-4.png'];
 let angryBirdImg = new Image
@@ -173,11 +174,11 @@ addEventListener('keydown',(e)=>{
 
 function start(){
 //loop speed
-let miliSecond = 1000/10
+let miliSecond = 1000/20
 
 let loop = setInterval(() => {
 
-    cowBoyCtx.clearRect(0, 0, w, h)
+    moonCtx.clearRect(0, 0, w, h)
 
     //score
     currentScore++
@@ -238,7 +239,7 @@ let loop = setInterval(() => {
     if (isJumping == true) {
         //jump cowboy
         if (cowBoy.y_position >= 320) {
-            cowBoy.y_position -= 10
+            cowBoy.y_position -= (10 + cowBoy.speed)
         } else {
             isJumping = false
         }
@@ -267,7 +268,7 @@ let loop = setInterval(() => {
     }else {
         //keep running cowboy
         if (cowBoy.y_position < 477) {
-            cowBoy.y_position += 10
+            cowBoy.y_position +=  (10 + cowBoy.speed)
         }
         cowBoyImg.src = `Assets/Monkey/Running/${cowBoyRunning[srcIndex]}`
         cowBoyCtx.drawImage(cowBoyImg, cowBoy.x_position, cowBoy.y_position, cowBoy.width, cowBoy.height);
