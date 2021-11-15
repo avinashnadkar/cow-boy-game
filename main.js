@@ -43,7 +43,6 @@ scoreStartBtn.addEventListener('click',()=>{
     let countdown = setInterval(()=>{
         countDown.innerHTML = counter
         counter--
-        console.log(counter)
         if(counter == -1) {
             clearInterval(countdown)
             modal.style.display = 'none'
@@ -86,7 +85,7 @@ let surface = {
 let cowBoyCtx = gameLayout.getContext('2d');
 let cowBoy = {
     x_position: 120,
-    y_position: 657 - 180,
+    y_position: 477,
     width: 80,
     height: 80,
 }
@@ -153,7 +152,20 @@ cloudOneImg.src = "Assets/sky_objects/cloud_1.png"
 let isJumping = false;
 addEventListener('keydown', function (e) {
     if ((e.key == "ArrowUp" || e.key == " " || e.key == "w") && (cowBoy.y_position >= 476)) {
-        isJumping = true
+        isJumping = true;
+        isSlideing = false;
+        cowBoy.height = 80;
+        cowBoy.y_position = 477;
+    }
+})
+
+//Slide player
+let isSlideing = false;
+//set time to 0 to count the time till player need to be slide
+let cowBoySlideTime = 0;
+addEventListener('keydown',(e)=>{
+    if((e.key == "ArrowDown" || e.key == "s") && (cowBoy.y_position >= 476)){
+        isSlideing = true;
     }
 })
 
@@ -161,7 +173,7 @@ addEventListener('keydown', function (e) {
 
 function start(){
 //loop speed
-let miliSecond = 1000/10
+let miliSecond = 1000/30
 
 let loop = setInterval(() => {
 
@@ -238,7 +250,22 @@ let loop = setInterval(() => {
         } else{
             srcIndex++
         }
-    } else {
+    }else if(isSlideing == true){
+        //Slide cowboy
+        cowBoyImg.src = `Assets/Monkey/Sliding/Slide__000.png`
+        cowBoy.height = 50;
+        cowBoy.y_position = 510;
+        cowBoyCtx.drawImage(cowBoyImg, cowBoy.x_position, cowBoy.y_position, cowBoy.width, cowBoy.height);
+        if(cowBoySlideTime >= 20){
+            cowBoySlideTime = 0
+            isSlideing = false
+            cowBoy.height = 80;
+            cowBoy.y_position = 477;
+        }else{
+            cowBoySlideTime++
+        }
+    }else {
+        //keep running cowboy
         if (cowBoy.y_position < 477) {
             cowBoy.y_position += 10
         }
