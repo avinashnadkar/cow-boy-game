@@ -122,6 +122,18 @@ let birdsImgArr = ['bird-1.png', 'bird-2.png', 'bird-3.png', 'bird-4.png'];
 let angryBirdImg = new Image
 let birdSrcIndex = 0;
 
+//Tunnel
+let tunnelCtx = gameLayout.getContext('2d')
+let tunnel = {
+    x_position: 1180,
+    y_position: 505,
+    width: 130,
+    height: 60,
+    speed : 23
+}
+let tunnelImg = new Image;
+tunnelImg.src = "Assets/Tunnel/tunnel.png";
+
 //moon
 let moonCtx = gameLayout.getContext('2d');
 let moonVal = {
@@ -234,6 +246,9 @@ let loop = setInterval(() => {
     } else {
         birdSrcIndex++
     }
+
+    //Draw tunnel
+    tunnelCtx.drawImage(tunnelImg,tunnel.x_position,tunnel.y_position,tunnel.width,tunnel.height);
 
     //Loop cowboy
     if (isJumping == true) {
