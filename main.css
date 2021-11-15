@@ -21,7 +21,7 @@ body{
    position: absolute;
    height: 100%;
    /* background-color: rgba(179, 179, 179, 0.582); */
-   background-image: radial-gradient(rgba(145, 146, 122, 0.62), rgba(77, 67, 70, 0.58)), url("assets/screenshots/game-screenshot.png");
+   background-image: radial-gradient(rgba(145, 146, 122, 0.62), rgba(77, 67, 70, 0.58)), url("Assets/screenshots/game-screenshot.png");
    background-position: center;
    background-size: cover;
    background-repeat: no-repeat;
