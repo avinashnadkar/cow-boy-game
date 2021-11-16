@@ -103,7 +103,7 @@ let c_tree = {
     y_position: 477,
     width: 80,
     height: 80,
-    speed : 23
+    speed : 26
 }
 
 let CrismastreeImg = new Image;
@@ -116,7 +116,7 @@ let angryBird = {
     y_position: 360,
     width: 50,
     height: 50,
-    speed : 25
+    speed : 27
 }
 let birdsImgArr = ['bird-1.png', 'bird-2.png', 'bird-3.png', 'bird-4.png'];
 let angryBirdImg = new Image
@@ -129,7 +129,7 @@ let tunnel = {
     y_position: 505,
     width: 130,
     height: 60,
-    speed : 23
+    speed : 26
 }
 let tunnelImg = new Image;
 tunnelImg.src = "Assets/Tunnel/tunnel.png";
@@ -185,6 +185,11 @@ addEventListener('keydown',(e)=>{
 ////////////////////////Game loop/////////////////////////
 
 function start(){
+
+//timer counter for genrating random obstacles
+let timer = 1280
+//random obstacles 1=tree, 2=bird, 3= tunnel
+let randObstacle = Math.floor(Math.random() * 3) + 1
 //loop speed
 let miliSecond = 1000/20
 
@@ -215,40 +220,45 @@ let loop = setInterval(() => {
     surfaceCtx.fillStyle = "green"
 
     /////////////////Draw random obstacles //////////////////
-    let randObstacle = Math.floor(Math.random() * 3) + 1
 
-    //Tree
-    if (c_tree.x_position <= 0) {
-        c_tree.x_position = 1280
-    } else {
-        c_tree.x_position -= c_tree.speed
-    }
-
-    CrismastreeCtx.drawImage(CrismastreeImg, c_tree.x_position, c_tree.y_position, c_tree.width, c_tree.height)
-
-    //Draw Bird
-    if (angryBird.x_position <= 0) {
-        if (c_tree.x_position <= 1280 && c_tree.x_position >= 100) {
-            //draw after tree in any random value 
-            angryBird.x_position = 1280 + c_tree.x_position + Math.floor(Math.random()*(1000-200+1)+200)
-            // console.log(Math.floor(Math.random * 800) + 200)
+    if(randObstacle == 1){
+            //Tree
+        if (c_tree.x_position <= 0) {
+            //random obstacles 1=tree, 2=bird, 3= tunnel
+            randObstacle = Math.floor(Math.random() * 3) + 1;
+            c_tree.x_position = 1380
         } else {
-            angryBird.x_position = 1280
+            c_tree.x_position -= c_tree.speed
         }
-    } else {
-        angryBird.x_position -= angryBird.speed
+        CrismastreeCtx.drawImage(CrismastreeImg, c_tree.x_position, c_tree.y_position, c_tree.width, c_tree.height)
+    }else if(randObstacle == 2){
+        //Draw Bird
+        if (angryBird.x_position <= 0) {
+            //random obstacles 1=tree, 2=bird, 3= tunnel
+            randObstacle = Math.floor(Math.random() * 3) + 1;
+            angryBird.x_position = 1380
+        } else {
+            angryBird.x_position -= angryBird.speed
+        }
+        angryBirdImg.src = `Assets/angryBird/${birdsImgArr[birdSrcIndex]}`
+        birdCtx.drawImage(angryBirdImg, angryBird.x_position, angryBird.y_position, angryBird.width, angryBird.height);
+        if (birdSrcIndex == 3) {
+            birdSrcIndex = 0
+        } else {
+            birdSrcIndex++
+        }
+    }else if(randObstacle == 3){
+        //Draw tunnel
+        if (tunnel.x_position <= -50) {
+            //random obstacles 1=tree, 2=bird, 3= tunnel
+            randObstacle = Math.floor(Math.random() * 3) + 1;
+            tunnel.x_position = 1380
+        } else {
+            tunnel.x_position -= tunnel.speed
+        }
+        tunnelCtx.drawImage(tunnelImg,tunnel.x_position,tunnel.y_position,tunnel.width,tunnel.height);
     }
-
-    angryBirdImg.src = `Assets/angryBird/${birdsImgArr[birdSrcIndex]}`
-    birdCtx.drawImage(angryBirdImg, angryBird.x_position, angryBird.y_position, angryBird.width, angryBird.height);
-    if (birdSrcIndex == 3) {
-        birdSrcIndex = 0
-    } else {
-        birdSrcIndex++
-    }
-
-    //Draw tunnel
-    tunnelCtx.drawImage(tunnelImg,tunnel.x_position,tunnel.y_position,tunnel.width,tunnel.height);
+ 
 
     //Loop cowboy
     if (isJumping == true) {
@@ -313,9 +323,11 @@ let loop = setInterval(() => {
     }
 
     //Increase speed of obstacles to increse level of difficulties
-    if(currentScore % 500 == 0){
-        angryBird.speed += 2.5
-        c_tree.speed += 2.5
+    if(currentScore % 250 == 0){
+        angryBird.speed += 6
+        c_tree.speed += 6
+        tunnel.speed += 6
+        cowBoy.speed += 1
     }
 
 
