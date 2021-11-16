@@ -59,3 +59,13 @@ button:hover{
     background-color: black;
     color: white;
 }
+
+.final-score{
+    width: 500px;
+}
+.final-score p{
+    margin:  5px;
+}
+.final-score p span {
+    margin-left: 5px;
+}
