@@ -2,6 +2,8 @@
 let countDown = document.querySelector('.countDown');
 let modal = document.querySelector('.modal')
 
+let deskTopGuid = document.querySelector('.desktop-guide')
+
 let ruleBox = document.querySelector('.rules-guide');
 let ruleNextBtn = document.getElementById('rules-next-btn');
 
@@ -13,8 +15,14 @@ let scoreBox = document.querySelector('.score-guide')
 let scoreStartBtn = document.getElementById('score-start-btn');
 let scoreBackBtn = document.getElementById('score-back-btn');
 
+let finalScoreBox = document.querySelector('.final-score');
+let finalScore = document.querySelector('.finalScore');
+let high_score = document.querySelector('.highScore');
+let playAgainBtn = document.getElementById('play-again-btn');
+
 controlBox.style.display = 'none'
 scoreBox.style.display = 'none'
+finalScoreBox.style.display = 'none'
 
 ruleNextBtn.addEventListener('click',()=>{
     controlBox.style.display = 'block';
@@ -46,11 +54,19 @@ scoreStartBtn.addEventListener('click',()=>{
         if(counter == -1) {
             clearInterval(countdown)
             modal.style.display = 'none'
+            deskTopGuid.style.display = "none"
+            countDown.style.display = 'none'
             //start game after coundown is 0
             start()
         }
     },1000)
     //desktopGuid.style.display = 'block';
+})
+
+//play again
+playAgainBtn.addEventListener('click',()=>{
+    finalScoreBox.style.display = 'none'
+    window.location.reload()
 })
 
 ////////////////Init game data ///////////////////////
@@ -307,14 +323,20 @@ let loop = setInterval(() => {
 
     //defeat check (collision between player and tree)
     if ((cowBoy.x_position >= c_tree.x_position) && (cowBoy.y_position >= c_tree.y_position)) {
-        alert("You lost")
+        high_score.innerHTML = highScore;
+        finalScore.innerHTML = currentScore;
+        modal.style.display = "flex"
+        finalScoreBox.style.display = 'block';
         //stop game loop
         clearInterval(loop)
         if (currentScore > highScore) {
             localStorage.setItem('highScore', currentScore)
         }
     }else if((cowBoy.x_position >= angryBird.x_position) && (cowBoy.y_position <= angryBird.y_position)){
-        alert("You lost")
+        high_score.innerHTML = highScore;
+        finalScore.innerHTML = currentScore;
+        modal.style.display = "flex"
+        finalScoreBox.style.display = 'block';
         //stop game loop
         clearInterval(loop)
         if (currentScore > highScore) {
