@@ -125,18 +125,18 @@ let c_tree = {
 let CrismastreeImg = new Image;
 CrismastreeImg.src = "Assets/Trees/cristmas.png";
 
-//bird
-let birdCtx = gameLayout.getContext('2d');
-let angryBird = {
+//wall
+let wallCtx = gameLayout.getContext('2d');
+let wall = {
     x_position: 1680,
     y_position: 360,
-    width: 50,
-    height: 50,
+    width: 140,
+    height: 140,
     speed : 27
 }
-let birdsImgArr = ['bird-1.png', 'bird-2.png', 'bird-3.png', 'bird-4.png'];
-let angryBirdImg = new Image
-let birdSrcIndex = 0;
+
+let wallImg = new Image
+wallImg.src = "Assets/Wall/wall.jpg"
 
 //Tunnel
 let tunnelCtx = gameLayout.getContext('2d')
@@ -204,7 +204,7 @@ function start(){
 
 //timer counter for genrating random obstacles
 let timer = 1280
-//random obstacles 1=tree, 2=bird, 3= tunnel
+//random obstacles 1=tree, 2=wall, 3= tunnel
 let randObstacle = Math.floor(Math.random() * 3) + 1
 //loop speed
 let miliSecond = 1000/20
@@ -240,7 +240,7 @@ let loop = setInterval(() => {
     if(randObstacle == 1){
             //Tree
         if (c_tree.x_position <= 0) {
-            //random obstacles 1=tree, 2=bird, 3= tunnel
+            //random obstacles 1=tree, 2=wall, 3= tunnel
             randObstacle = Math.floor(Math.random() * 3) + 1;
             c_tree.x_position = 1380
         } else {
@@ -248,25 +248,22 @@ let loop = setInterval(() => {
         }
         CrismastreeCtx.drawImage(CrismastreeImg, c_tree.x_position, c_tree.y_position, c_tree.width, c_tree.height)
     }else if(randObstacle == 2){
-        //Draw Bird
-        if (angryBird.x_position <= 0) {
-            //random obstacles 1=tree, 2=bird, 3= tunnel
+        //Draw wall
+        if (wall.x_position <= 0) {
+            //random obstacles 1=tree, 2=wall, 3= tunnel
             randObstacle = Math.floor(Math.random() * 3) + 1;
-            angryBird.x_position = 1380
+            wall.x_position = 1380
         } else {
-            angryBird.x_position -= angryBird.speed
+            wall.x_position -= wall.speed
         }
-        angryBirdImg.src = `Assets/angryBird/${birdsImgArr[birdSrcIndex]}`
-        birdCtx.drawImage(angryBirdImg, angryBird.x_position, angryBird.y_position, angryBird.width, angryBird.height);
-        if (birdSrcIndex == 3) {
-            birdSrcIndex = 0
-        } else {
-            birdSrcIndex++
-        }
+      
+        //wallCtx.fillRect(wall.x_position, wall.y_position, wall.width, wall.height)
+        wallCtx.drawImage(wallImg, wall.x_position, wall.y_position, wall.width, wall.height);
+
     }else if(randObstacle == 3){
         //Draw tunnel
         if (tunnel.x_position <= -50) {
-            //random obstacles 1=tree, 2=bird, 3= tunnel
+            //random obstacles 1=tree, 2=wall, 3= tunnel
             randObstacle = Math.floor(Math.random() * 3) + 1;
             tunnel.x_position = 1380
         } else {
@@ -332,7 +329,7 @@ let loop = setInterval(() => {
         if (currentScore > highScore) {
             localStorage.setItem('highScore', currentScore)
         }
-    }else if((cowBoy.x_position >= angryBird.x_position) && (cowBoy.y_position <= angryBird.y_position)){
+    }else if((cowBoy.x_position >= wall.x_position) && (cowBoy.y_position <= wall.y_position)){
         high_score.innerHTML = highScore;
         finalScore.innerHTML = currentScore;
         modal.style.display = "flex"
@@ -346,7 +343,7 @@ let loop = setInterval(() => {
 
     //Increase speed of obstacles to increse level of difficulties
     if(currentScore % 250 == 0){
-        angryBird.speed += 6
+        wall.speed += 6
         c_tree.speed += 6
         tunnel.speed += 6
         cowBoy.speed += 1
