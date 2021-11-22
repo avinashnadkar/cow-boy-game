@@ -95,8 +95,8 @@ let highScoreCtx = gameLayout.getContext("2d");
 highScoreCtx.font = "80px Arial";
 
 //define height and width and color of layout
-let w = 1350;
-let h = 657;
+let w = innerWidth;
+let h = innerHeight;
 gameLayout.height = h;
 gameLayout.width = w;
 gameLayout.style.backgroundColor = "rgb(40, 40, 41)";
